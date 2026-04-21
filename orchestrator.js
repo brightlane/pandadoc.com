@@ -4,6 +4,7 @@ const affiliates = require('./lib/affiliates-validator');
 const agent1 = require('./agents/agent-1-keyword');
 const agent10 = require('./agents/agent-10-policy');
 
+const PALM_LINK = 'https://pandadoc.partnerlinks.io/Palm';  // FIXED HERE
 const ELITE_GEOS = ['france', 'germany', 'brazil'];
 
 async function generateElitePages() {
@@ -24,21 +25,17 @@ async function generateElitePages() {
         {{PRICING_CTA}}
       `;
       
-      // Inject commissions
       content = affiliates.injectPalmAffiliate(content);
-      
-      // Add compliance
       const compliant = await agent10.addCompliance({content}, geo);
       
-      // Create directories + save
       fs.mkdirSync(`public/${geo}`, { recursive: true });
       fs.writeFileSync(`public/${geo}/${pageType}-${i}.html`, 
         `<!DOCTYPE html><html><head><title>${title}</title></head><body>${compliant.content}</body></html>`);
       
-      console.log(`✅ public/${geo}/${pageType}-${i}.html → ${PALM_LINK}`);
+      console.log(`✅ public/${geo}/${pageType}-${i}.html → ${PALM_LINK}`);  // FIXED
     }
   }
-  console.log('🎉 150 unstoppable pages ready! Run "npm run deploy"');
+  console.log('🎉 150 unstoppable pages ready!');
 }
 
 generateElitePages();
