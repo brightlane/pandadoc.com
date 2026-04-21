@@ -1,0 +1,11 @@
+{
+  "name": "pandadoc-ai-elite",
+  "version": "4.0.0",
+  "scripts": {
+    "start": "node orchestrator.js",
+    "deploy": "npx gh-pages -d public"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
+  }
+}
