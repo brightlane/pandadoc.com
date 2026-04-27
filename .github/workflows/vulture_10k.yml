@@ -1,0 +1,29 @@
+name: Vulture 10K Daily Sweep
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Midnight UTC
+  workflow_dispatch: # Allows manual run for testing
+
+jobs:
+  vulture_automate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Execute Vulture Protocol
+        run: python vulture_engine.py
+
+      - name: Auto-Commit Daily Data
+        run: |
+          git config --global user.name "Vulture-Bot-10K"
+          git config --global user.email "bot@pandadoc.com"
+          git add inventory.json
+          git commit -m "Vulture 10K: Daily Inventory Sweep [$(date)]" || echo "No changes"
+          git push
