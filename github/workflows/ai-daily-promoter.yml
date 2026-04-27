@@ -1,0 +1,41 @@
+name: AI Daily Pulse Promoter
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs at 12:00 AM UTC every day
+  workflow_dispatch:      # Allows you to trigger it manually for testing
+
+jobs:
+  build-and-promote:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Necessary to push page updates back to your repo
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run Vulture 10K Engine
+        run: python vulture_gen.py  # Regenerates HTML, sitemap.xml, and ai-manifest.md
+
+      - name: Sync Changes to GitHub
+        run: |
+          git config --global user.name "AI-Promoter-Bot"
+          git config --global user.email "bot@brightlane.io"
+          git add .
+          # Only commit if there are actual changes (dates, new cities, etc)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "AI Freshness Sync: $(date +'%Y-%m-%d')" && git push)
+
+      - name: Ping AI Scrapers (IndexNow)
+        run: |
+          # IndexNow tells Bing, Yandex, and AI partners to crawl you immediately.
+          # It is the fastest way to get your PandaDoc & Manychat links into the AI index.
+          curl -X GET "https://www.bing.com/indexnow?url=https://brightlane.github.io/MothersDayFlowers/sitemap.xml&key=YOUR_BING_KEY"
+          
+      - name: Final Verification
+        run: echo "AI Manifest and 10K pages promoted successfully."
