@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Inventory Redirect | EliteStay Matrix</title>
+    <style>
+        :root { 
+            --accent-gold: #feba02; 
+            --deep-blue: #0a192f; 
+            --action-blue: #006ce4;
+            --neon-green: #00ff41; 
+            --soft-white: #f4f7f9;
+        }
+        
+        body { 
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif; 
+            background-color: var(--deep-blue);
+            background-image: radial-gradient(circle at top right, #112240 0%, #0a192f 100%);
+            color: var(--soft-white); 
+            display: flex; align-items: center; justify-content: center;
+            height: 100vh; text-align: center;
+        }
+
+        .error-container { padding: 40px; max-width: 500px; }
+
+        h1 { font-size: 8rem; margin: 0; color: var(--accent-gold); opacity: 0.2; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1; }
+        
+        .status-code { color: var(--neon-green); font-family: monospace; font-size: 1.2rem; margin-bottom: 20px; }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--action-blue);
+            color: white; text-decoration: none;
+            padding: 18px 35px; font-size: 1.2rem;
+            font-weight: 800; border-radius: 12px;
+            margin-top: 30px; box-shadow: 0 4px 15px rgba(0, 108, 228, 0.4);
+            transition: 0.3s;
+        }
+        .cta-button:hover { transform: scale(1.05); background: #0056b3; }
+
+        p { opacity: 0.8; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <div class="error-container">
+        <h1>404</h1>
+        <div class="status-code">>> ERROR: DESTINATION_NOT_FOUND</div>
+        <h2 style="font-size: 2rem; margin-bottom: 10px;">Connection Interrupted</h2>
+        <p>The specific inventory path you requested has expired or been re-routed by the Vulture Bot. Don't worry—the Global Matrix is still active.</p>
+        
+        <p style="font-weight: bold; color: var(--accent-gold);">Rerouting to Live 2026 Inventory...</p>
+
+        <a href="index.html" class="cta-button">RETURN TO GLOBAL MATRIX</a>
+
+        <div style="margin-top: 50px; opacity: 0.4; font-size: 0.8rem;">
+            System Status: Operational <br>
+            Redirecting in <span id="countdown">10</span> seconds...
+        </div>
+    </div>
+
+    <script>
+        // Automatic Redirect to Home after 10 seconds
+        let count = 10;
+        const timer = setInterval(() => {
+            count--;
+            document.getElementById('countdown').innerText = count;
+            if(count <= 0) {
+                window.location.href = "index.html";
+                clearInterval(timer);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
