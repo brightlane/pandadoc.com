@@ -1,0 +1,9 @@
+# EliteStay Matrix - Global Robots Protocol
+User-agent: *
+Allow: /
+
+# Optimization for Vulture 10K Daily Sweeps
+Crawl-delay: 1
+
+# Sitemaps for Programmatic SEO Indexing
+Sitemap: https://brightlane.github.io/pandadoc.com/sitemap.xml
